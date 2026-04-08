@@ -3,14 +3,14 @@ mr_seam = "ENTER_MRSEAM_HERE"
 mrsigner_seam = "ENTER_MRSIGNERSEAM_HERE"
 mr_td = "ENTER_MRTD_HERE"
 
+mr_config_id = "none"
+mr_owner = "none"
+mr_owner_config = "none"
+
 rtmr0 = "ENTER_RTMR0_HERE"
 rtmr1 = "ENTER_RTMR1_HERE"
 rtmr2 = "ENTER_RTMR2_HERE"
 rtmr3 = "ENTER_RTMR3_HERE"
-
-mr_config_id = "none"
-mr_owner = "none"
-mr_owner_config = "none"
 
 [policy]
 allow_debug = false

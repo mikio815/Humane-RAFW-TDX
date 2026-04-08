@@ -40,7 +40,7 @@ def get_tdeventlog():
             capture_output=True,
             timeout=30,
         )
-        return result.stdout
+        return result.stderr
     except FileNotFoundError:
         raise RuntimeError("tdeventlog command not found.")
     except subprocess.TimeoutExpired:
