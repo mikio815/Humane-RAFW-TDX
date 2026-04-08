@@ -1,0 +1,1 @@
+# Humane Intel TDX Remote Attestation Framework for baremetal environment (Humane-RAFW-TDX)

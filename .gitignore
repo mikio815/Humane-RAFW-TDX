@@ -1,0 +1,10 @@
+*.pem
+*.so
+venv
+__pycache__
+reference.toml
+tdeventlog.txt
+ima_runtime_measurements.txt
+attester.spec
+dist/
+build/
