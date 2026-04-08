@@ -2,7 +2,7 @@
 *.so
 venv
 __pycache__
-reference.toml
+relying-party/reference.toml
 relying-party/settings.toml
 tdeventlog.txt
 ima_runtime_measurements.txt
