@@ -596,10 +596,7 @@ def call_add_api(a: int, b: int) -> int:
 
 
 
-if __name__ == "__main__":
-    ATTESTER_URL = resolve_attester_url()
-    print(f"[config] ATTESTER_URL = {ATTESTER_URL}")
-
+def do_RA():
     result = request_quote()
     quote_bytes = bytes.fromhex(result["quote"])
 
@@ -626,6 +623,13 @@ if __name__ == "__main__":
     if input("Display IMA runtime measurements? (y/N): ").strip().lower() == "y":
         print("\n[IMA Runtime Measurements]")
         print(result["ima_log"].decode("utf-8", errors="replace"))
+
+
+if __name__ == "__main__":
+    ATTESTER_URL = resolve_attester_url()
+    print(f"[config] ATTESTER_URL = {ATTESTER_URL}")
+
+    do_RA()
 
     # サンプル秘密計算リクエスト関数
     x, y = 100, 200
