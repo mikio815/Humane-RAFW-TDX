@@ -156,8 +156,8 @@ Perform this on the host of the Attester machine.
     ```
     The output will look like below; note down the network interface name on the first line. In the example below, `ens51f0np0` is the relevant one.
     ```sh
-    default via 133.125.0.1 dev ens51f0np0 proto static 
-    133.125.0.0/24 dev ens51f0np0 proto kernel scope link src 133.125.0.65 
+    default via xxx.xxx.0.1 dev ens51f0np0 proto static 
+    xxx.xxx.0.0/24 dev ens51f0np0 proto kernel scope link src xxx.xxx.0.65 
     192.168.122.0/24 dev virbr0 proto kernel scope link src 192.168.122.1
     ```
     You just need to identify the interface that has the machine's IP assigned to it, so of course using other methods such as `ifconfig` is also fine. You will use the identified interface name later, so be sure to note it down.
@@ -760,8 +760,8 @@ INFO:     20.243.195.59:60118 - "POST /add HTTP/1.1" 200 OK
 ```
 (venv) user@machine:~/Develop/tdx/Humane-RAFW-TDX/relying-party$ sudo make
 ./venv/bin/python3 rp_client.py
-[config] ATTESTER_URL = https://133.125.0.65:8443/
-/home/aos/Develop/tdx/Humane-RAFW-TDX/relying-party/venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '133.125.0.65'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+[config] ATTESTER_URL = https://xxx.xxx.0.65:8443/
+/home/aos/Develop/tdx/Humane-RAFW-TDX/relying-party/venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'xxx.xxx.0.65'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
   warnings.warn(
 Obtained TD Quote successfully.
 Quote size: 5243 bytes
@@ -1038,8 +1038,8 @@ Attesterマシンのホスト上で実施。
     ```
     すると以下のように表示されるため、1行目に出てくるネットワークインタフェース名を控える。以下の例では `ens51f0np0`が相当。
     ```sh
-    default via 133.125.0.1 dev ens51f0np0 proto static 
-    133.125.0.0/24 dev ens51f0np0 proto kernel scope link src 133.125.0.65 
+    default via xxx.xxx.0.1 dev ens51f0np0 proto static 
+    xxx.xxx.0.0/24 dev ens51f0np0 proto kernel scope link src xxx.xxx.0.65 
     192.168.122.0/24 dev virbr0 proto kernel scope link src 192.168.122.1
     ```
     そのマシンのIPが割り当てられているインタフェースを特定できれば良いので、`ifconfig`等他の方法でも勿論問題ない。特定したインタフェース名は後で使用するので控えておく事。
@@ -1642,8 +1642,8 @@ INFO:     20.243.195.59:60118 - "POST /add HTTP/1.1" 200 OK
 ```
 (venv) user@machine:~/Develop/tdx/Humane-RAFW-TDX/relying-party$ sudo make
 ./venv/bin/python3 rp_client.py
-[config] ATTESTER_URL = https://133.125.0.65:8443/
-/home/aos/Develop/tdx/Humane-RAFW-TDX/relying-party/venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '133.125.0.65'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+[config] ATTESTER_URL = https://xxx.125.0.65:8443/
+/home/aos/Develop/tdx/Humane-RAFW-TDX/relying-party/venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'xxx.125.0.65'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
   warnings.warn(
 Obtained TD Quote successfully.
 Quote size: 5243 bytes
