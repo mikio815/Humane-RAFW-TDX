@@ -726,6 +726,12 @@ In operations, this procedure is expected to be performed by an RP operator who 
     | `required_tcb_eval_ds_num` | Specifies the minimum acceptable value of the TCB Evaluation Dataset Number, a value that concisely expresses the security version of the TDX environment in question. If not needed, 0 is fine. | Determine the setting from the number to the right of `TCB-R Counter:` in the table on [this](https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/trusted-computing-base-recovery-attestation.html) page and the contents of the table. 0 if not needed. |
     | `allowed_sa_list` | List of allowed vulnerabilities. For Intel-related vulnerabilities, Intel publishes Security Advisories (SA), each with its own ID. For example, SGX's MMIO Stale Data vulnerability is assigned the ID `INTEL-SA-00615`. In this field, specify, by SA ID, the vulnerabilities that you have decided to allow after considering the risks. If you do not want to allow any, leave it empty. | empty |
 
+* Also in the `relying-party` folder, copy `settings_template.toml` to `settings.toml`.
+    ```sh
+    cp settings_template.toml settings.toml
+    ```
+    Currently, `settings.toml` contains only a line for setting the Attester's URL. Change it as appropriate to match the actual Attester's URL.
+
 ### Running the Attester Side
 * With the `attester`-side venv active, run the following command inside the `attester` folder of this repository within the TD:
     ```sh
@@ -1601,6 +1607,12 @@ Attester（TDX）マシンにて実施する。
     | `allow_smt_enabled` | ハイパースレッドの有効化を許可するか。ハイパースレッドは潜在的にTEEに対する攻撃を助長するリスクがあるため（例：ZombieLoad攻撃、Gather Data Sampling攻撃）、無効化しておく事が望ましい。 | `false` |
     | `required_tcb_eval_ds_num` | そのTDX環境のセキュリティバージョンを端的に表現する、TCB Evaluation Dataset Numberという値について、その許容する下限値を指定する。必要がなければ0で良い。 | [こちら](https://www.intel.com/content/www/us/en/developer/topic-technology/software-security-guidance/trusted-computing-base-recovery-attestation.html)のページの表にある、`TCB-R Counter:`の右の数字と、表の内容から判断して設定する。不要であれば0 |
     | `allowed_sa_list` | 許容する脆弱性のリスト。Intel関連の脆弱性には、Intelによりセキュリティアドバイザリ（SA）が公開されており、さらにSAそれぞれにIDが振られている。例えばSGXにおけるMMIO Stale Data脆弱性には`INTEL-SA-00615`というIDが付与されている。このフィールドでは、危険性を考慮の上で許容すると判断した脆弱性を、このSAのIDで指定する。許容しない場合には空にする。 | 空 |
+
+* 同じく`relying-party`フォルダ内の`settings_template.toml`を`settings.toml`としてコピーする。
+    ```sh
+    cp settings_template.toml settings.toml
+    ```
+    `settings.toml`内には現状ではAttesterのURLを設定する行のみが存在する。実際のAttesterのURLに合わせて適宜変更する。
 
 ### Attester側の実行
 * `attester`側のvenvに入った状態で、TD内の本リポジトリの`attester`フォルダで以下のコマンドを実行する。
