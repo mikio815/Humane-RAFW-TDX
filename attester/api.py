@@ -3,12 +3,17 @@ from pydantic import BaseModel
 import ssl
 import base64
 import hashlib
+import os
 import subprocess
 
 from cert_gen import generate_tls_cert
 from tdx_wrapper import get_tdx_quote
 
 IMA_LOG_PATH = "/sys/kernel/security/ima/ascii_runtime_measurements"
+MOCK_TDX = os.environ.get("MOCK_TDX", "").lower() in {"1", "true", "yes", "on"}
+
+MOCK_TDEVENTLOG = b"mock-tdx-eventlog\n"
+MOCK_IMA_LOG = b"mock-ima-runtime-measurements\n"
 
 priv_pem, cert_pem, cert_hash = generate_tls_cert()
 
@@ -26,6 +31,9 @@ class AddRequest(BaseModel):
 
 
 def get_ima_log():
+    if MOCK_TDX:
+        return MOCK_IMA_LOG
+
     try:
         with open(IMA_LOG_PATH, "rb") as f:
             return f.read()
@@ -34,6 +42,9 @@ def get_ima_log():
 
 
 def get_tdeventlog():
+    if MOCK_TDX:
+        return MOCK_TDEVENTLOG
+
     try:
         result = subprocess.run(
             ["tdeventlog"],
