@@ -13,7 +13,8 @@ import atexit
 from enum import IntEnum
 from qvl_wrapper import verify_quote, QvlVerifyOutPy
 
-SETTINGS_PATH = "./settings.toml"
+SETTINGS_PATH = os.environ.get("RAFW_SETTINGS_PATH", "./settings.toml")
+REFERENCE_PATH = os.environ.get("RAFW_REFERENCE_PATH", "./reference.toml")
 PINNED_CERT_PATH = "./pinned_attester_cert.pem"
 
 ROOT_KEY_ID_SIZE = 48
@@ -313,7 +314,7 @@ def appraise_quote(quote: bytes, qvl_out: QvlVerifyOutPy,
     print(f"Collateral expiration status -> {qvl_out.collateral_expiration_status}\n")
 
     # リファレンス値の読み込み
-    with open("reference.toml", "rb") as f:
+    with open(REFERENCE_PATH, "rb") as f:
         ref = tomllib.load(f)
 
     def load_ref(key: str) -> bytes | None:
@@ -627,6 +628,8 @@ def do_RA():
 
 if __name__ == "__main__":
     ATTESTER_URL = resolve_attester_url()
+    print(f"[config] SETTINGS_PATH = {SETTINGS_PATH}")
+    print(f"[config] REFERENCE_PATH = {REFERENCE_PATH}")
     print(f"[config] ATTESTER_URL = {ATTESTER_URL}")
 
     do_RA()
