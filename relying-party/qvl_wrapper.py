@@ -11,10 +11,9 @@ if REPO_ROOT not in sys.path:
 from mock_tdx_common import (
     MOCK_QV_RESULT_INVALID_SIGNATURE,
     MOCK_QV_RESULT_OK,
-    build_mock_supplemental_data,
     mock_tdx_enabled,
-    verify_mock_quote_signature,
 )
+from mock_qvl import build_mock_supplemental_data, verify_mock_quote_signature
 
 LIB = "./libqvlwrapper.so"
 MOCK_TDX = mock_tdx_enabled()

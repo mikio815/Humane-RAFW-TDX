@@ -1,9 +1,5 @@
 import os
 
-from cryptography.exceptions import InvalidSignature
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import ec
-
 
 MOCK_QUOTE_BODY_SIZE = 1024
 MOCK_SIGNATURE_LEN_SIZE = 2
@@ -23,25 +19,12 @@ MOCK_RTMR1 = bytes.fromhex("55" * 48)
 MOCK_RTMR2 = bytes.fromhex("66" * 48)
 MOCK_RTMR3 = bytes.fromhex("77" * 48)
 
-_MOCK_PRIVATE_VALUE = int(
-    "123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0",
-    16,
-)
-
 
 def mock_tdx_enabled() -> bool:
     return os.environ.get("MOCK_TDX", "").lower() in {"1", "true", "yes", "on"}
 
 
-def _mock_private_key():
-    return ec.derive_private_key(_MOCK_PRIVATE_VALUE, ec.SECP256R1())
-
-
-def _mock_public_key():
-    return _mock_private_key().public_key()
-
-
-def build_mock_quote(report_data: bytes) -> bytes:
+def build_mock_quote_body(report_data: bytes) -> bytes:
     if len(report_data) != 64:
         raise ValueError("report_data must be 64 bytes")
 
@@ -59,14 +42,12 @@ def build_mock_quote(report_data: bytes) -> bytes:
     body[base + 328 + 48 * 3 : base + 328 + 48 * 4] = MOCK_RTMR3
     body[base + 520 : base + 520 + 64] = report_data
 
-    body_bytes = bytes(body)
-    signature = _mock_private_key().sign(body_bytes, ec.ECDSA(hashes.SHA256()))
-    return body_bytes + len(signature).to_bytes(MOCK_SIGNATURE_LEN_SIZE, "little") + signature
+    return bytes(body)
 
 
-def verify_mock_quote_signature(quote: bytes) -> bool:
+def split_mock_quote_signature(quote: bytes) -> tuple[bytes, bytes] | None:
     if len(quote) < MOCK_QUOTE_BODY_SIZE + MOCK_SIGNATURE_LEN_SIZE:
-        return False
+        return None
 
     body = quote[:MOCK_QUOTE_BODY_SIZE]
     sig_len_start = MOCK_QUOTE_BODY_SIZE
@@ -76,16 +57,6 @@ def verify_mock_quote_signature(quote: bytes) -> bool:
     sig_end = sig_start + sig_len
 
     if sig_len <= 0 or len(quote) != sig_end:
-        return False
+        return None
 
-    signature = quote[sig_start:sig_end]
-
-    try:
-        _mock_public_key().verify(signature, body, ec.ECDSA(hashes.SHA256()))
-        return True
-    except InvalidSignature:
-        return False
-
-
-def build_mock_supplemental_data() -> bytes:
-    return b"\x00" * MOCK_SUPPLEMENTAL_DATA_SIZE
+    return body, quote[sig_start:sig_end]

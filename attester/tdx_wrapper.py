@@ -7,7 +7,8 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from mock_tdx_common import build_mock_quote, mock_tdx_enabled
+from mock_quote import build_mock_quote
+from mock_tdx_common import mock_tdx_enabled
 
 
 def _find_libtdxwrapper():
