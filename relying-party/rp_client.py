@@ -31,7 +31,7 @@ class QvResult(IntEnum):
     REVOKED = 0x0000A005
     UNSPECIFIED = 0x0000A006
 
-    SW_HAEDENING_NEEDED = 0x0000A007
+    SW_HARDENING_NEEDED = 0x0000A007
     CONFIG_AND_SW_HARDENING_NEEDED = 0x0000A008
 
     TD_RELAUNCH_ADVISED = 0x0000A009
@@ -368,7 +368,7 @@ def appraise_quote(quote: bytes, qvl_out: QvlVerifyOutPy,
             print("CONFIGURATION_NEEDED is disallowed by user's policy.")
             return False
 
-    if (ra_status == QvResult.SW_HAEDENING_NEEDED
+    if (ra_status == QvResult.SW_HARDENING_NEEDED
         or ra_status == QvResult.CONFIG_AND_SW_HARDENING_NEEDED):
         if allow_sw_hardening:
             print("SW_HARDENING_NEEDED is allowed by user's policy.")
